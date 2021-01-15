@@ -20,12 +20,19 @@ drinkPrice = 0
 drinkQuantity = 0
 drinkTotal = 0
 drinkChoice = ""
+discount = 0
+discounted = 0
 
 
 #Main program while loop
 while (done == False):
     print("Welcome! Please select an option! \n[1] Mains \n[2] Sides \n[3] Drinks \n[4] Check out \n[5] Exit \nNote: One can only order one dish per each kind of food \n and selecting a dish option overrides the selection.")
-    choice = input("\nWhich option would you select? ")
+    choice = input("\nWhich option would you select? ")  
+    #while choice is not "1", "2", "3", or "4" then keep asking the user to enter a correct input
+    while (choice not in ["1", "2", "3", "4", "5"]):
+        print("\nInvalid Input! Please only input: 1, 2, 3, 4, or 5!")
+        choice = input("Which option would you select?")
+    
     #If statement for main
     if (choice == "1"):
         print("You have selected mains. Here are the following choices) \n[1] Steak ₱ 900 \n[2] Salmon ₱ 850 \n[3] Chicken ₱ 300 \n[4] Cancel")
@@ -47,7 +54,7 @@ while (done == False):
             mainQuantity = int(input("How many would you like? "))
         #If user inputs "4", choice is canceled
         elif (mainChoice == "4"):
-            print("Choice Canceled!")
+            print("\nChoice Canceled!\n")
         mainTotal = round(mainPrice * mainQuantity, 2)
     #If statement for side
     if (choice == "2"):
@@ -71,7 +78,7 @@ while (done == False):
             sideQuantity = int(input("How many would you like? "))
         #If user inputs "4", choice is canceled
         elif (sideChoice == "4"):
-            print("Choice Canceled!")
+            print("\nChoice Canceled!\n")
         sideTotal = sidePrice * sideQuantity
     #If statement for drink
     if (choice == "3"):
@@ -94,7 +101,7 @@ while (done == False):
             drinkQuantity = int(input("How many would you like? "))
         #If user inputs "4", choice is canceled
         elif (drinkChoice == "4"):
-            print("Choice Canceled!")
+            print("\nChoice Canceled!\n")
         drinkTotal = drinkPrice *  drinkQuantity
     #If Statement for Checkout
     if (choice == "4"):
@@ -107,6 +114,12 @@ while (done == False):
         print("\nTOTAL: ₱", "{:.2f}".format(total, 2))
         #Takes payment input
         payment = int(input("Enter amount to be paid: ₱ "))
+        
+        #if the input is insufficient, keep asking the user to enter an amount that is more than the total
+        while(payment < total):
+            print("Insufficient Funds!")
+            payment = int(input("Enter amount to be paid: ₱ "))
+
         #If combo 1 is selected, 10% discount is given
         if (mainChoice == "3" and sideChoice == "2" and drinkChoice == "1"):
             print("Chicken Mash Tea Combo gives 10% discount.")
@@ -141,6 +154,7 @@ while (done == False):
         drinkPrice = 0
         drinkQuantity = 0
         drinkTotal = 0
+        discount = 0
     
     #If user chooses 5, sets done to true to stop while loop
     if (choice == "5"):
